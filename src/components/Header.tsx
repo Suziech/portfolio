@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-scroll";
 
 export default function Header() {
   const [showHeader, setShowHeader] = useState(true);
@@ -26,10 +27,29 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 bg-white z-10 shadow-md transition-transform duration-300 ${
+      className={`sticky top-0 bg-[#b1ff87] z-10 shadow-md transition-transform duration-300 ${
         showHeader ? "transform-none" : "-translate-y-full"
       }`}>
-      <h1>헤더가 스크롤에 따라 나타났다가 사라집니다!</h1>
+      <div className='flex justify-around text-[#002f7b]'>
+        <Link to='main' smooth={true} duration={500}>
+          Main
+        </Link>
+        <Link to='aboutMe' smooth={true} duration={500}>
+          About Me
+        </Link>
+        <Link to='experience' smooth={true} duration={500}>
+          Experence
+        </Link>
+        <Link to='certification' smooth={true} duration={500}>
+          Certification
+        </Link>
+        <Link to='projects' smooth={true} duration={500}>
+          Projects
+        </Link>
+        <Link to='contact' smooth={true} duration={500}>
+          Contact
+        </Link>
+      </div>
     </header>
   );
 }

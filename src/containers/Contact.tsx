@@ -1,3 +1,7 @@
 export default function Contact() {
-  return <div className='min-h-screen bg-pink-600'>Contact</div>;
+  return (
+    <div id='contact' className='min-h-screen bg-pink-600'>
+      Contact
+    </div>
+  );
 }
