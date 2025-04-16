@@ -1,4 +1,4 @@
-// import Header from "@/components/Header";
+import Header from "@/components/Header";
 
 export default function RootLayoout({
   children,
@@ -7,7 +7,7 @@ export default function RootLayoout({
 }) {
   return (
     <>
-      <div>Header</div>
+      <Header />
       <main>{children}</main>
     </>
   );

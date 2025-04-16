@@ -1,17 +1,16 @@
-import { createTranslation } from "@/utils/localization/server";
-import type { LocaleTypes } from "@/utils/localization/settings";
-import Test from "@/containers/test";
-export default async function Page({
-  params: { locale },
-}: {
-  params: { locale: LocaleTypes };
-}) {
-  const { t } = await createTranslation(locale, "common");
-
+import Main from "@/containers/Main";
+import AboutMe from "@/containers/AboutMe";
+import Experience from "@/containers/Experience";
+import Projects from "@/containers/Projects";
+import Contact from "@/containers/Contact";
+export default async function Page() {
   return (
     <>
-      <div>{t("home")}</div>
-      <Test />
+      <Main />
+      <AboutMe />
+      <Experience />
+      <Projects />
+      <Contact />
     </>
   );
 }
