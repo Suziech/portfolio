@@ -20,14 +20,20 @@ export default function Main() {
   // 💡 useMemo - This way, the array won't be recreated every time the component re-renders; it will wonly be created once. using useMemo is a good habit to keep the code more stable and prevent unnecessary re-renders or effect executions as the code grows
 
   const [currentLine, setCurrentLine] = useState(0);
-  const [displayedTexts, setDisplayedTexts] = useState(["", "", ""]);
+  const [displayedTexts, setDisplayedTexts] = useState(["", "", "", ""]);
   const [showCursor, setShowCursor] = useState(true); // 👈 커서 표시 여부
+  const [jobAnimated, setJobAnimated] = useState(false);
   const speed = 50;
 
   const iRef = useRef(0);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const cursorIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  useEffect(() => {
+    if (currentLine === 2) {
+      setJobAnimated(true);
+    }
+  }, [currentLine]);
   useEffect(() => {
     iRef.current = 0;
 
@@ -103,9 +109,14 @@ export default function Main() {
         </div>
         <div
           className={`${
+            jobAnimated && "bounce-in-left"
+          }  text-[#002f7b] font-bold ${
             windowSize === "mobile" ? "text-[10px]" : "text-[40px]"
           }`}>
-          {renderTextWithCursor(2)}
+          <span
+            className={`${jobAnimated && "bg-white rounded-full px-4 inline"}`}>
+            {renderTextWithCursor(2)}
+          </span>
         </div>
         <div
           className={`${
