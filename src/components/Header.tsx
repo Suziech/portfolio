@@ -4,10 +4,12 @@ import { useState, useEffect, useRef } from "react";
 import { useResponsiveSize } from "@/utils/hooks/useResponsiveSize";
 import { RxHamburgerMenu } from "react-icons/rx";
 import NavLinks from "./NavLinks";
+import ChangeLocale from "./ChangeLocale";
 
 export default function Header() {
   const windowSize = useResponsiveSize();
   const [showHeader, setShowHeader] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const lastScrollY = useRef(0); // the position of prev scroll
 
   useEffect(() => {
@@ -28,18 +30,30 @@ export default function Header() {
     };
   }, []);
 
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
+
   return (
     <header
-      className={`sticky top-0 bg-[#b1ff87] z-10 shadow-md transition-transform duration-300 p-[30px] text-[30px] font-bold cursor-pointer ${
+      className={`sticky top-0 bg-[#b1ff87] z-10 shadow-md transition-transform duration-300 text-[30px] font-bold ${
         showHeader ? "transform-none" : "-translate-y-full"
-      }`}>
-      {windowSize === "mobile" ? (
-        // <div className='min-h-screen text-[#002f7b]'>
-        //   <NavLinks />
-        // </div>
-        <RxHamburgerMenu className='text-black w-6 h-6' />
-      ) : (
-        <div className='flex justify-around text-[#002f7b]'>
+      } ${windowSize === "mobile" ? "p-[15px]" : "p-[30px]"}`}>
+      <div className='flex justify-between items-center'>
+        {windowSize === "mobile" ? (
+          <RxHamburgerMenu
+            className='text-black w-6 h-6 cursor-pointer'
+            onClick={toggleMenu}
+          />
+        ) : (
+          <div className='flex justify-around w-full text-[#002f7b]'>
+            <NavLinks />
+          </div>
+        )}
+        <ChangeLocale />
+      </div>
+      {windowSize === "mobile" && isMenuOpen && (
+        <div className='h-lvh flex flex-col text-[#002f7b] pt-[100px]'>
           <NavLinks />
         </div>
       )}

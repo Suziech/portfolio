@@ -4,17 +4,17 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import Image from "next/image";
 import me_image from "@/assets/images/suzie_image.png";
 import { useResponsiveSize } from "@/utils/hooks/useResponsiveSize";
+import type { LocaleTypes } from "@/utils/localization/settings";
+import { useTranslation } from "@/utils/localization/client";
+import { useParams } from "next/navigation";
 
 export default function Main() {
+  const locale = useParams()?.locale as LocaleTypes;
+  const { t } = useTranslation(locale, "main");
   const windowSize = useResponsiveSize();
   const lines = useMemo(
-    () => [
-      "Seulki Choi",
-      "(a.k.a Suzie)",
-      "Frontend Developer",
-      "I enjoy turning ideas into elegant, responsive interfaces.",
-    ],
-    []
+    () => [t("name"), "(a.k.a Suzie)", t("job"), t("desc")],
+    [t]
   );
 
   // 💡 useMemo - This way, the array won't be recreated every time the component re-renders; it will wonly be created once. using useMemo is a good habit to keep the code more stable and prevent unnecessary re-renders or effect executions as the code grows
@@ -46,6 +46,12 @@ export default function Main() {
         setTimeout(() => setCurrentLine((prev) => prev + 1), 1000);
       }
     };
+
+    setDisplayedTexts((prev) => {
+      const updated = [...prev];
+      updated[currentLine] = "";
+      return updated;
+    });
 
     typeLine();
 
@@ -80,11 +86,11 @@ export default function Main() {
           : "items-center justify-around"
       }`}>
       <div
-        className={`flex flex-col border ${
+        className={`flex flex-col ${
           windowSize === "mobile" ? "w-full items-center" : "w-[60%] h-[500px]"
         }`}>
         <div
-          className={`font-bold flex ${
+          className={`font-bold text-[#b1ff87] flex ${
             windowSize === "mobile" ? "text-[30px]" : "text-[100px]"
           }`}>
           {renderTextWithCursor(0)}
@@ -111,9 +117,9 @@ export default function Main() {
       <Image
         src={me_image}
         alt='me_image'
-        width={500}
-        height={500}
-        className='rounded-2xl p-10'
+        width={windowSize === "mobile" ? 300 : 500}
+        height={windowSize === "mobile" ? 300 : 500}
+        className={`rounded-2xl ${windowSize === "mobile" ? "mb-10" : "m-10"}`}
       />
     </div>
   );
